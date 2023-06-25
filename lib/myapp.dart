@@ -19,7 +19,7 @@ class _MyAppState extends State<MyApp> {
         return Padding(
           padding: MediaQuery.of(context).viewInsets,
           child: SingleChildScrollView(
-            child: Container(  
+            child: Container(
               child: Column(
                 children: [
                   TextField(
@@ -40,19 +40,18 @@ class _MyAppState extends State<MyApp> {
                     onPressed: () {
                       String inputName = _nameController.text;
                       String inputDays = _daysController.text;
-                      ListTile newTile = ListTile(
-                        title: Text(inputName),
-                        subtitle: Text(inputDays),
-                      );
-                      setState(() {
-                        if(inputName.isNotEmpty){
-                        _dataItems.add(newTile);
-                        Navigator.pop(context); 
-                        }
-                      });
-                      _nameController.clear();
-                      _daysController.clear();
-                      
+                      if (inputName.isNotEmpty) {
+                        ListTile newTile = ListTile(
+                          title: Text(inputName),
+                          subtitle: Text(inputDays),
+                        );
+                        setState(() {
+                          _dataItems.add(newTile);
+                        });
+                        _nameController.clear();
+                        _daysController.clear();
+                        Navigator.pop(context);
+                      }
                     },
                   ),
                 ],
@@ -73,11 +72,18 @@ class _MyAppState extends State<MyApp> {
           title: Text('DemoApp'),
           centerTitle: true,
         ),
-        body: ListView.builder(
-          itemCount: _dataItems.length,
-          itemBuilder: (context, index) {
-            return _dataItems[index];
-          },
+        body: GridView.count(
+          crossAxisCount: 2,
+          children: _dataItems.map((listTile) {
+            return Container(
+              margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: listTile,
+            );
+          }).toList(),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
