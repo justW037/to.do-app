@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MyApp extends StatefulWidget {
   @override
@@ -11,6 +12,7 @@ class _MyAppState extends State<MyApp> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _daysController = TextEditingController();
   List<ListTile> _dataItems = [];
+  int _colorIndex = 0; // Biến đếm màu nền
 
   void _showModalBottomSheet() {
     showModalBottomSheet(
@@ -36,17 +38,18 @@ class _MyAppState extends State<MyApp> {
                     keyboardType: TextInputType.number,
                   ),
                   ElevatedButton(
-                    child: Text('Add task'),
+                    child: const Text('Add task'),
                     onPressed: () {
                       String inputName = _nameController.text;
                       String inputDays = _daysController.text;
-                      if (inputName.isNotEmpty) {
+                      if (inputName.isNotEmpty && inputDays.isNotEmpty) {
                         ListTile newTile = ListTile(
                           title: Text(inputName),
                           subtitle: Text(inputDays),
                         );
                         setState(() {
                           _dataItems.add(newTile);
+                          _colorIndex++; // Tăng biến đếm màu nền
                         });
                         _nameController.clear();
                         _daysController.clear();
@@ -69,23 +72,36 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('DemoApp'),
+          title: Text(
+            'DemoApp',
+            style: GoogleFonts.dancingScript(
+              textStyle: TextStyle(color: Colors.black, fontSize: 40, fontWeight: FontWeight.w100),
+            ),
+          ),
+          backgroundColor: Colors.white,
           centerTitle: true,
         ),
         body: GridView.count(
+          mainAxisSpacing: 2.5,
+          crossAxisSpacing: 2.5,
           crossAxisCount: 2,
-          children: _dataItems.map((listTile) {
+          children: _dataItems.asMap().entries.map((entry) {
+            int index = entry.key;
+            ListTile listTile = entry.value;
+             Color backgroundColor = (index % 4 == 0 || index % 4 == 3) ? Colors.brown : Color(0xFFD7D0AF);
+             Color textColor = (backgroundColor == Colors.black) ? Colors.white : Colors.black;
             return Container(
-              margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+              margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
                 borderRadius: BorderRadius.circular(8.0),
+                color: backgroundColor,
               ),
               child: listTile,
             );
           }).toList(),
         ),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.black,
           onPressed: () {
             _showModalBottomSheet();
           },
