@@ -1,7 +1,8 @@
 class DataItems {
   final String name;
-  final int days;
+  final String days;
+  final String id;
   
-  DataItems({ required this.name,required this.days});
+  DataItems({ required this.name,required this.days, required this.id});
  
 }
