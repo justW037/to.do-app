@@ -42,7 +42,7 @@ class _ModalBottomState extends State<ModalBottom> {
                   decoration: const InputDecoration(
                     labelText: 'Type days',
                   ),
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.datetime,
                 ),
                 ElevatedButton(
                   child: Text('Add task'),
