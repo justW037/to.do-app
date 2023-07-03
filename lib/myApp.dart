@@ -5,6 +5,9 @@ import 'package:demo2/modalbottom.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:intl/date_symbols.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class Myapp extends StatefulWidget {
   Myapp({Key? key}) : super(key: key);
@@ -111,8 +114,21 @@ class _MyappState extends State<Myapp> {
             ),
             Expanded(
               flex: 4,
-              child: Container(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: TableCalendar(
+                    rowHeight: 35,
+                    focusedDay: DateTime.now(),
+                    startingDayOfWeek: StartingDayOfWeek.monday,
+                    firstDay: DateTime.utc(2010, 10, 01), 
+                    lastDay: DateTime.utc(2099, 10, 01),
+                    headerStyle: const HeaderStyle(
+                      formatButtonVisible: false, 
+                      titleCentered: true,
+                      ),
+                    ),
               ),
+              
             ),
           ],
         ),

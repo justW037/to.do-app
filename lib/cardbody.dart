@@ -65,9 +65,8 @@ class _CardBodyState extends State<CardBody> {
                         ),
                     ),
                   ),
-                  const SizedBox(height: 20, ),
+                  const SizedBox(height: 10, ),
                   Expanded(
-                    
                     child: Text(
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -79,21 +78,19 @@ class _CardBodyState extends State<CardBody> {
                         ),
                         )
                         ),
-                    SizedBox(height: 12,),
+                    SizedBox(height: 10,),
                   Expanded(
-                    
+                   
                     child:Column(
                       children: [
-                        Container(
-                          child: Text(
-                           widget.item.days,
-                          style: const TextStyle( 
-                              color: Colors.black,
-                              fontSize: 19,
-                              ),
-                          ),
+                        Text(
+                         widget.item.days,
+                        style: const TextStyle( 
+                            color: Colors.black,
+                            fontSize: 20,
+                            ),
                         ),
-                        SizedBox(height: 12,),
+                        SizedBox(height: 18,),
                         Container(
                           
                           padding: EdgeInsets.all(4),

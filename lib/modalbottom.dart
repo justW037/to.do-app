@@ -28,19 +28,19 @@ class _ModalBottomState extends State<ModalBottom> {
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Container(
-            height: 200,
+            height: 300,
             child: Column(
               children: [
                 TextField(
                   controller: nameController, 
                   decoration: const InputDecoration(
-                    labelText: 'Type task',
+                    labelText: 'Task name',
                   ),
                 ),
                 TextField(
                   controller: daysController, 
                   decoration: const InputDecoration(
-                    labelText: 'Type days',
+                    labelText: 'Schedule ',
                   ),
                   keyboardType: TextInputType.datetime,
                 ),
