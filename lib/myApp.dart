@@ -5,8 +5,6 @@ import 'package:demo2/modalbottom.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:date_picker_timeline/date_picker_timeline.dart';
-import 'package:intl/date_symbols.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Myapp extends StatefulWidget {
@@ -55,6 +53,7 @@ class _MyappState extends State<Myapp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -72,7 +71,7 @@ class _MyappState extends State<Myapp> {
         body: Column(
           children: [
             Expanded(
-              flex: 2,
+              flex: 1,
               child: Padding(
                 padding: EdgeInsets.fromLTRB(20,0,20,0),
                 child: Column(
@@ -88,7 +87,7 @@ class _MyappState extends State<Myapp> {
                         alignment: Alignment.bottomLeft,
                         child: Text(
                           'Your \nProject($itemCount)',
-                          style: TextStyle(fontSize: 50, fontWeight: FontWeight.w500),
+                          style: TextStyle(fontSize: 40, fontWeight: FontWeight.w500),
                         ),
                     )
                   ],
@@ -96,7 +95,7 @@ class _MyappState extends State<Myapp> {
               ),
             ),
             Expanded(
-              flex: 3,
+              flex: 2,
               child: PageView.builder(
                 controller: _pageController =PageController(viewportFraction: 0.65,),
                 pageSnapping: true,
@@ -113,11 +112,11 @@ class _MyappState extends State<Myapp> {
               ),
             ),
             Expanded(
-              flex: 4,
+              flex: 3,
               child: Padding(
-                padding: const EdgeInsets.only(left: 8),
+                padding: const EdgeInsets.fromLTRB(20,0,20,0),
                 child: TableCalendar(
-                    rowHeight: 35,
+                    rowHeight: 33,
                     focusedDay: DateTime.now(),
                     startingDayOfWeek: StartingDayOfWeek.monday,
                     firstDay: DateTime.utc(2010, 10, 01), 
@@ -126,6 +125,9 @@ class _MyappState extends State<Myapp> {
                       formatButtonVisible: false, 
                       titleCentered: true,
                       ),
+                    calendarStyle: CalendarStyle(
+                      cellMargin: EdgeInsets.all(1),
+                    ),
                     ),
               ),
               
@@ -135,11 +137,9 @@ class _MyappState extends State<Myapp> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.black,
           onPressed: () {
-            showModalBottomSheet(
-              context: context,
-              builder: (BuildContext context) {
-                return ModalBottom(addTask: _handleAddTask);
-              },
+            Navigator.push(
+              context, 
+              MaterialPageRoute(builder: (context)=> ModalBottom(addTask: _handleAddTask))
             );
           },
           child: const Icon(Icons.add),
