@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class DataItems {
   final String name;
   final String days;
-  final String color;
+  final Color color;
   
   DataItems({ 
     required this.name,

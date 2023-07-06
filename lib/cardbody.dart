@@ -1,27 +1,28 @@
-import 'package:demo2/modalbottom.dart';
-import 'package:demo2/theme.dart';
 import 'package:demo2/dataitem.dart';
+import 'package:demo2/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 class CardBody extends StatefulWidget {
   final DataItems item;
-  final Function DeleteTask;
-  
-  CardBody({Key? key, required this.item, required this.DeleteTask}) : super(key: key);
+  final Function(DataItems) DeleteTask;
+
+  CardBody({Key? key, required this.item, required this.DeleteTask})
+      : super(key: key);
 
   @override
-  State<CardBody> createState() => _CardBodyState();
+  _CardBodyState createState() => _CardBodyState();
 }
 
 class _CardBodyState extends State<CardBody> {
   late DateFormat dateFormat;
+  late Color cardColor;
 
   @override
   void initState() {
     super.initState();
     dateFormat = DateFormat("dd/MM/yyyy");
+    cardColor = widget.item.color;
   }
 
   @override
@@ -29,11 +30,15 @@ class _CardBodyState extends State<CardBody> {
     DateTime inputDate = dateFormat.parse(widget.item.days);
     Duration difference = inputDate.difference(DateTime.now());
     int differenceInDays = difference.inDays;
-    
+
+    if (cardColor == null) {
+      // Xử lý khi cardColor là null, ví dụ: đặt màu mặc định
+      cardColor = Colors.grey;
+    }
     return Container(
       margin: EdgeInsets.only(left: 20),
       decoration: BoxDecoration(
-        // color: ,
+        color: cardColor,
         borderRadius: BorderRadius.circular(18),
       ),
       child: Padding(
@@ -46,7 +51,7 @@ class _CardBodyState extends State<CardBody> {
               child: Container(
                 width: 35,
                 height: 35,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: Colors.black,
                   shape: BoxShape.circle,
                 ),
@@ -54,14 +59,14 @@ class _CardBodyState extends State<CardBody> {
                   onTap: () {
                     widget.DeleteTask(widget.item);
                   },
-                  child: const Icon(
+                  child: Icon(
                     Icons.delete_outline,
                     color: Color(0xFFF9E9C8),
                   ),
                 ),
               ),
             ),
-            const SizedBox(
+            SizedBox(
               height: 10,
             ),
             Expanded(
@@ -69,7 +74,7 @@ class _CardBodyState extends State<CardBody> {
                 widget.item.name,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.black,
                   fontSize: 35,
                   fontWeight: FontWeight.w500,
@@ -83,7 +88,7 @@ class _CardBodyState extends State<CardBody> {
               alignment: Alignment.centerLeft,
               child: Text(
                 widget.item.days,
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.black,
                   fontSize: 20,
                 ),
@@ -104,12 +109,12 @@ class _CardBodyState extends State<CardBody> {
                 children: [
                   Text(
                     differenceInDays.toString(),
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.black,
                       fontSize: 18,
                     ),
                   ),
-                  const Text(
+                  Text(
                     ' days left',
                     style: TextStyle(
                       fontSize: 18,
