@@ -19,8 +19,8 @@ class _MyappState extends State<Myapp> {
   PageController _pageController = PageController();
   int itemCount =0;
 
-  void _handleAddTask(String name, String days) {
-    final newItem = DataItems(name: name, days: days, id: DateTime.now().toString());
+  void _handleAddTask(String name, String days, ) {
+    final newItem = DataItems(name: name, days: days, color: DateTime.now().toString());
     setState(() {
       items.add(newItem);
       itemCount = items.length;

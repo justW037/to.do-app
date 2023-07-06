@@ -1,7 +1,7 @@
 import 'package:demo2/theme.dart';
 import 'package:flutter/material.dart';
 class ModalBottom extends StatefulWidget {
-  final Function(String name, String days) addTask;
+  final Function(String name, String days,) addTask;
 
   ModalBottom({Key? key, required this.addTask}) : super(key: key);
 
@@ -13,7 +13,12 @@ class ModalBottom extends StatefulWidget {
 class _ModalBottomState extends State<ModalBottom> {
   TextEditingController nameController = TextEditingController();
   TextEditingController daysController = TextEditingController();
- 
+  int _selectedColor =0;
+   List<Color> colorList = [
+      AppColor.PrimaryColor,
+      AppColor.PrimaryColor2,
+      AppColor.PrimaryColor4,
+    ];
   @override
   void dispose() {
     nameController.dispose();
@@ -69,20 +74,22 @@ class _ModalBottomState extends State<ModalBottom> {
                   ),
                   const Text(
                     'Create new task', 
-                    style: Heading.Heading2,
+                    style: Heading.Heading1,
                     
                     ),
-    
+                  Container(
+                    alignment: Alignment.topLeft,
+                    child: Text('Topic', style: Heading.Heading3)),
                   TextField(
                     controller: nameController, 
                     decoration: const InputDecoration(
-                      labelText: 'Topic',
-                      labelStyle: Heading.Heading3,
                       hintText: 'Write topic'
                     ),
                   ),
                   SizedBox(height: 50,),
-                
+                  Container(
+                    alignment: Alignment.topLeft,
+                    child: Text('Date', style: Heading.Heading3)),
                   Container(
                     child: Row(
                       children: [
@@ -90,8 +97,6 @@ class _ModalBottomState extends State<ModalBottom> {
                           child: TextFormField(
                             controller: daysController, 
                             decoration: const InputDecoration(
-                              labelText: 'Date ',
-                              labelStyle: Heading.Heading3,
                               hintText: 'dd/MM/yyyy',
                               ),
                             keyboardType: TextInputType.datetime,
@@ -106,6 +111,37 @@ class _ModalBottomState extends State<ModalBottom> {
                       ],
                     ),
                   ),
+                  SizedBox(height: 50),
+                  Container(
+                    alignment: Alignment.topLeft,
+                    child: Text('Color', style: Heading.Heading3)),
+
+
+                    Container(
+                      alignment: Alignment.bottomLeft,
+                      child: Wrap(
+                        children: List<Widget>.generate(colorList.length, (int index) {
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _selectedColor = index;
+                              });
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(0,10,8,0),
+                              child: CircleAvatar(
+                                radius: 14,
+                                backgroundColor: colorList[index],
+                                child: _selectedColor==index?Icon(
+                                  Icons.done, 
+                                  color: Colors.black,): Container(),
+                              ),
+                            ),
+                          );
+                        }),
+                      ),
+                    ),
+
                   SizedBox(height: 100),
                   SizedBox(
                     width: double.infinity,
@@ -116,8 +152,9 @@ class _ModalBottomState extends State<ModalBottom> {
                       onPressed: () {
                         String name = nameController.text;
                         String days = daysController.text; 
+
                         if (name.isNotEmpty && days.isNotEmpty) {
-                          widget.addTask(name,days);
+                          widget.addTask(name,days,);
                           Navigator.pop(context);
                         }
                       },

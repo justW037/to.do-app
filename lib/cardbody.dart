@@ -1,3 +1,4 @@
+import 'package:demo2/modalbottom.dart';
 import 'package:demo2/theme.dart';
 import 'package:demo2/dataitem.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'package:intl/intl.dart';
 class CardBody extends StatefulWidget {
   final DataItems item;
   final Function DeleteTask;
-
+  
   CardBody({Key? key, required this.item, required this.DeleteTask}) : super(key: key);
 
   @override
@@ -28,11 +29,11 @@ class _CardBodyState extends State<CardBody> {
     DateTime inputDate = dateFormat.parse(widget.item.days);
     Duration difference = inputDate.difference(DateTime.now());
     int differenceInDays = difference.inDays;
-
+    
     return Container(
       margin: EdgeInsets.only(left: 20),
       decoration: BoxDecoration(
-        color: AppColor.PrimaryColor,
+        // color: ,
         borderRadius: BorderRadius.circular(18),
       ),
       child: Padding(
