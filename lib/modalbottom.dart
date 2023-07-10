@@ -121,7 +121,7 @@ class _ModalBottomState extends State<ModalBottom> {
                   Container(
                     alignment: Alignment.bottomLeft,
                     child: Wrap(
-                      children: List<Widget>.generate(colorList.length, (int index) {
+                      children: List<Widget>.generate(3, (int index) {
                         return GestureDetector(
                           onTap: () {
                             setState(() {
@@ -157,7 +157,6 @@ class _ModalBottomState extends State<ModalBottom> {
                       onPressed: () {
                         String name = nameController.text;
                         String days = daysController.text;
-
                         if (name.isNotEmpty && days.isNotEmpty) {
                           widget.addTask(name, days, _selectedColor);
                           Navigator.pop(context);

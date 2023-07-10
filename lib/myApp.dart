@@ -1,6 +1,8 @@
+
 import 'package:confirm_dialog/confirm_dialog.dart';
 import 'package:demo2/cardbody.dart';
 import 'package:demo2/dataitem.dart';
+import 'package:demo2/drawer.dart';
 import 'package:demo2/modalbottom.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -16,9 +18,10 @@ class Myapp extends StatefulWidget {
 
 class _MyappState extends State<Myapp> {
   final List<DataItems> items = [];
+  final List<String> completeTask = [];
   PageController _pageController = PageController();
   int itemCount =0;
-
+  
   void _handleAddTask(String name, String days, Color color) {
   final newItem = DataItems(name: name, days: days, color: color);
   setState(() {
@@ -50,12 +53,41 @@ class _MyappState extends State<Myapp> {
     
   }
 
+
+  void _completeTask(String name){
+    setState(() {
+      completeTask.add(name);
+      items.removeWhere((item) => item.name == name);
+      items.forEach((item) {
+      if (item.name == name) {
+        item.isCompleted = true;
+      }
+    });
+
+      itemCount = items.length;
+    });
+  }
+
+  void _showCompleteTaskModal() {
+  showModalBottomSheet(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
+    context: context,
+    builder: (BuildContext context) {
+      return SingleChildScrollView(
+        child: CompleteTask(completeTask: completeTask),
+      );
+    },
+  );
+}
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
+         iconTheme: const IconThemeData(color: Colors.black),
           elevation: 0,
           title: Text(
             'DemoApp',
@@ -73,11 +105,11 @@ class _MyappState extends State<Myapp> {
             Expanded(
               flex: 1,
               child: Padding(
-                padding: EdgeInsets.fromLTRB(20,0,20,0),
+                padding: const EdgeInsets.fromLTRB(20,0,20,0),
                 child: Column(
                   children: [
                     const Align(
-                        alignment: Alignment.topLeft, // Định vị văn bản sang phải
+                        alignment: Alignment.topLeft,
                         child: Text(
                           'Hello JustW',
                           style: TextStyle(fontSize: 17, fontStyle: FontStyle.italic),
@@ -86,8 +118,8 @@ class _MyappState extends State<Myapp> {
                     Align(
                         alignment: Alignment.bottomLeft,
                         child: Text(
-                          'Your \nProject($itemCount)',
-                          style: TextStyle(fontSize: 40, fontWeight: FontWeight.w500),
+                          'Your Task($itemCount)',
+                          style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w500),
                         ),
                     )
                   ],
@@ -95,26 +127,31 @@ class _MyappState extends State<Myapp> {
               ),
             ),
             Expanded(
-              flex: 2,
-              child: PageView.builder(
-                controller: _pageController =PageController(viewportFraction: 0.65,),
-                pageSnapping: true,
-                itemCount: items.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Transform.translate(
-                    offset: Offset(-70, 0),
-                    child: CardBody(
-                      item: items[index],
-                      DeleteTask: _handleDeleteTask,
-                    ),
-                  );
-                },
+              flex: 3,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0,20,0,0),
+                child: PageView.builder(
+                  controller: _pageController =PageController(viewportFraction: 0.65,),
+                  pageSnapping: true,
+                  itemCount: items.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Transform.translate(
+                      offset: const Offset(-70, 0),
+                      child: CardBody(
+                        item: items[index],
+                        DeleteTask: _handleDeleteTask, 
+                        onCompleteTask: _completeTask,
+                        isCompleted: completeTask.contains(items[index].name),
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
             Expanded(
-              flex: 3,
+              flex: 4,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20,0,20,0),
+                padding: const EdgeInsets.fromLTRB(20,20,20,0),
                 child: TableCalendar(
                     rowHeight: 33,
                     focusedDay: DateTime.now(),
@@ -125,12 +162,11 @@ class _MyappState extends State<Myapp> {
                       formatButtonVisible: false, 
                       titleCentered: true,
                       ),
-                    calendarStyle: CalendarStyle(
+                    calendarStyle: const CalendarStyle(
                       cellMargin: EdgeInsets.all(1),
                     ),
                     ),
               ),
-              
             ),
           ],
         ),
@@ -144,8 +180,18 @@ class _MyappState extends State<Myapp> {
           },
           child: const Icon(Icons.add),
         ),
+        drawer: Drawer(
+          child: DrawerBody(onShowCompleteTask: _showCompleteTaskModal,),
+        ),
       ),
     );
   }
 }
+
+
+
+
+
+
+
 

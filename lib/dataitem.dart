@@ -9,6 +9,8 @@ class DataItems {
     required this.name,
     required this.days, 
     required this.color});
+
+  set isCompleted(bool isCompleted) {}
  
 }
 
