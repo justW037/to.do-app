@@ -41,6 +41,7 @@ dependencies:
   intl: ^0.18.1
   date_picker_timeline: ^1.2.5
   table_calendar: ^3.0.9
+  font_awesome_flutter: ^10.5.0
   
 
 dev_dependencies:
