@@ -1,5 +1,5 @@
-import 'package:demo2/dataitem.dart';
-import 'package:demo2/theme.dart';
+import 'package:demo2/dataAndTheme/dataitem.dart';
+import 'package:demo2/dataAndTheme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

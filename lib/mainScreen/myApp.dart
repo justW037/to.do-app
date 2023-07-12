@@ -1,9 +1,9 @@
 
 import 'package:confirm_dialog/confirm_dialog.dart';
-import 'package:demo2/cardbody.dart';
-import 'package:demo2/dataitem.dart';
-import 'package:demo2/drawer.dart';
-import 'package:demo2/modalbottom.dart';
+import 'package:demo2/mainScreen/cardbody.dart';
+import 'package:demo2/dataAndTheme/dataitem.dart';
+import 'package:demo2/mainScreen/drawer.dart';
+import 'package:demo2/mainScreen/modalbottom.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -70,7 +70,7 @@ class _MyappState extends State<Myapp> {
 
   void _showCompleteTaskModal() {
   showModalBottomSheet(
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
+    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
     context: context,
     builder: (BuildContext context) {
       return SingleChildScrollView(
@@ -90,12 +90,12 @@ class _MyappState extends State<Myapp> {
          iconTheme: const IconThemeData(color: Colors.black),
           elevation: 0,
           title: Text(
-            'DemoApp',
-            style: GoogleFonts.dancingScript(
-              color: Colors.black,
-              fontWeight: FontWeight.w500,
-              fontSize: 40,
-            ),
+            'To.do',
+                  style: GoogleFonts.concertOne(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 40,
+                  )
           ),
           centerTitle: true,
           backgroundColor: Colors.white,
@@ -118,7 +118,7 @@ class _MyappState extends State<Myapp> {
                     Align(
                         alignment: Alignment.bottomLeft,
                         child: Text(
-                          'Your Task($itemCount)',
+                          'Your Project($itemCount)',
                           style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w500),
                         ),
                     )

@@ -1,5 +1,5 @@
 
-import 'package:demo2/loginscreen.dart';
+import 'package:demo2/logScreen/signInScreen.dart';
 import 'package:flutter/material.dart';
 
 
